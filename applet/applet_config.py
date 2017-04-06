@@ -8,7 +8,7 @@
 """
 
 
-from json import loads
+from json import loads, dumps
 import os
 
 
@@ -24,6 +24,8 @@ class AppletConfig:
         self.read_html_and_css_and_js_dict = {}
         self.init_data()
         self.read_html_and_css_and_js()
+        self.build_js()
+        self.build_css()
 
     def init_data(self):
         """
@@ -34,6 +36,9 @@ class AppletConfig:
         self.project_json_path = os.path.join(self.applet_dir_path, "index.json")
         with open(self.project_json_path) as fp:
             self.project_config = loads(fp.read())
+            self.title = self.project_config['title']
+        if not os.path.exists(os.path.join(self.build_dir_path, "static")):
+            os.makedirs(os.path.join(self.build_dir_path, "static"))
 
     def read_html_and_css_and_js(self):
         """
@@ -47,4 +52,20 @@ class AppletConfig:
                 css = fp.read()
             with open(os.path.join(self.applet_dir_path, obj['path'], "index.js")) as fp:
                 js = fp.read()
-            self.read_html_and_css_and_js_dict[obj['url']] = {"html": html, "css": css, "js": js}
+            self.read_html_and_css_and_js_dict[obj['url']] = {"html": html, "css": css, "js": js, "title": obj.get('title', self.title)}
+
+    def build_js(self):
+        """
+        生成唯一js
+        :return:
+        """
+        with open('./theme/static/index.js') as fp:
+            self.js_content = fp.read() % {"title": self.title, "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict)}
+
+    def build_css(self):
+        """
+        生成css
+        :return:
+        """
+        with open('./theme/static/index.css') as fp:
+            self.css_content = fp.read()
