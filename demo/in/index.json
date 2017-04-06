@@ -3,5 +3,8 @@
     {"url": "/abc", "path": "./pages/abc"},
     {"url": "/debug", "path": "./pages/debug"}
   ],
-  "title": "小程序首页"
+  "title": "小程序首页",
+  "components": [
+    {"name": "app-test", "path": "./component/test"}
+  ]
 }
