@@ -6,6 +6,7 @@ function goto_url(url){
     if(html_and_css_and_js_data[url]){
         $("#css").html(html_and_css_and_js_data[url]['css']);
         $("#html").html(html_and_css_and_js_data[url]['html']);
+        $("#js").html(html_and_css_and_js_data[url]['js']);
         $("#loading").hide();
     }else{
         alert("404");
