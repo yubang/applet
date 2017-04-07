@@ -30,7 +30,7 @@ class Applet:
                 fp.write(text.encode("UTF-8"))
         # 生成js
         with open(os.path.join(self.applet_config.build_dir_path, "static", "index.js"), "w") as fp:
-            fp.write(self.applet_config.js_content)
+            fp.write(self.applet_config.js_content.encode("UTF-8"))
         # 生成css
         with open(os.path.join(self.applet_config.build_dir_path, "static", "index.css"), "w") as fp:
-            fp.write(self.applet_config.css_content)
+            fp.write(self.applet_config.css_content.encode("UTF-8"))

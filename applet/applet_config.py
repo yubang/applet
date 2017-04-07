@@ -9,6 +9,7 @@
 
 
 from json import loads, dumps
+from .applet_component import AppletComponent
 import os
 
 
@@ -24,6 +25,7 @@ class AppletConfig:
         self.read_html_and_css_and_js_dict = {}
         self.init_data()
         self.read_html_and_css_and_js()
+        self.build_component()
         self.build_js()
         self.build_css()
 
@@ -60,7 +62,7 @@ class AppletConfig:
         :return:
         """
         with open('./theme/static/index.js') as fp:
-            self.js_content = fp.read() % {"title": self.title, "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict)}
+            self.js_content = fp.read().decode("UTF-8") % {"title": self.title, "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict), "component_js": self.component_js}
 
     def build_css(self):
         """
@@ -68,4 +70,15 @@ class AppletConfig:
         :return:
         """
         with open('./theme/static/index.css') as fp:
-            self.css_content = fp.read()
+            self.css_content = fp.read().decode("UTF-8") + "\n" +self.component_css
+
+    def build_component(self):
+        """
+        生成组件相关数据
+        :return:
+        """
+        self.components = []
+        for obj in self.project_config.get('components', []):
+            self.components.append(AppletComponent(self.applet_dir_path, obj['name'], obj['path']))
+        self.component_js = '\n'.join([ obj.js_content for obj in self.components])
+        self.component_css = '\n'.join([obj.css for obj in self.components])

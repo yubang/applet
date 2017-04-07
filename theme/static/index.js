@@ -13,6 +13,9 @@ function goto_url(url){
     }
 }
 
+// 组件js
+%(component_js)s
+
 $(document).ready(function(){
     goto_url(window.location.pathname);
 });
