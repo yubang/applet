@@ -26,7 +26,11 @@ class Applet:
         # 生成html
         with open(os.path.join(self.applet_config.build_dir_path, "index.html"), "w") as fp:
             with open("./theme/index.html") as fp2:
-                text = fp2.read() % {"title": self.applet_config.title}
+                text = fp2.read().decode("UTF-8") % {
+                    "title": self.applet_config.title,
+                    "css_list": '\n'.join(['<link rel="stylesheet" href="%s" />' % obj for obj in self.applet_config.project_config['own_css_list']]),
+                    "js_list": '\n'.join(['<script src="%s"></script>' % obj for obj in self.applet_config.project_config['own_js_list']]),
+                }
                 fp.write(text.encode("UTF-8"))
         # 生成js
         with open(os.path.join(self.applet_config.build_dir_path, "static", "index.js"), "w") as fp:

@@ -8,5 +8,11 @@
   "components": [
     {"name": "app-test", "path": "./component/test"}
   ],
-  "404": "/404"
+  "404": "/404",
+  "own_css_list": [
+    "https://cdn.bootcss.com/iview/2.0.0-rc.9/styles/iview.css"
+  ],
+  "own_js_list": [
+    "https://cdn.bootcss.com/iview/2.0.0-rc.9/iview.min.js"
+  ]
 }
