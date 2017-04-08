@@ -10,10 +10,11 @@
 
 from json import loads, dumps
 from .applet_component import AppletComponent
+from .base import BaseObject
 import os
 
 
-class AppletConfig:
+class AppletConfig(BaseObject):
     def __init__(self, applet_dir_path, build_dir_path):
         """
         初始化
@@ -48,12 +49,9 @@ class AppletConfig:
         :return:
         """
         for obj in self.project_config.get('pages', []):
-            with open(os.path.join(self.applet_dir_path, obj['path'], "index.html")) as fp:
-                html = fp.read()
-            with open(os.path.join(self.applet_dir_path, obj['path'], "index.css")) as fp:
-                css = fp.read()
-            with open(os.path.join(self.applet_dir_path, obj['path'], "index.js")) as fp:
-                js = fp.read()
+            html = self.read_from_file(os.path.join(self.applet_dir_path, obj['path'], "index.html"), "")
+            css = self.read_from_file(os.path.join(self.applet_dir_path, obj['path'], "index.css"), "")
+            js = self.read_from_file(os.path.join(self.applet_dir_path, obj['path'], "index.js"), "")
             self.read_html_and_css_and_js_dict[obj['url']] = {"html": html, "css": css, "js": js, "title": obj.get('title', self.title)}
 
     def build_js(self):
@@ -62,7 +60,7 @@ class AppletConfig:
         :return:
         """
         with open('./theme/static/index.js') as fp:
-            self.js_content = fp.read().decode("UTF-8") % {"title": self.title, "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict), "component_js": self.component_js}
+            self.js_content = fp.read().decode("UTF-8") % {"title": self.title, "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict), "component_js": self.component_js, "not_found_path": self.project_config['404']}
 
     def build_css(self):
         """

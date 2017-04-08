@@ -10,10 +10,11 @@
 
 from hashlib import md5
 from json import dumps
+from .base import BaseObject
 import os
 
 
-class AppletComponent:
+class AppletComponent(BaseObject):
     def __init__(self, applet_dir, component_name, component_dir):
         """
         初始化
@@ -26,13 +27,6 @@ class AppletComponent:
         self.component_dir = component_dir
         self.init_data()
         self.build_js_and_css()
-
-    @staticmethod
-    def read_from_file(file_path, default=None):
-        if not os.path.exists(file_path):
-            return default
-        with open(file_path) as fp:
-            return fp.read()
 
     def init_data(self):
         """
