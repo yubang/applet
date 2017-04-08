@@ -45,9 +45,11 @@ api：一个字典（可选），字典允许的key为url，data，method，head
 * error：请求失败回调函数，需要返回vue允许的data参数
 
 // vue对象（需要执行过app.init(字典);）
+
 app.vm
 
 // 无刷新跳转页面
+
 app.goto(url)
 
 ##### 更多
