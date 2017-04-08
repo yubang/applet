@@ -1,5 +1,4 @@
-function app_init(){
-    app.init({
+app.init({
         "data": {t: "测试来的"},
         "api": {
             "url": "/api",
@@ -8,4 +7,3 @@ function app_init(){
         }
     });
     console.log("welcome");
-}

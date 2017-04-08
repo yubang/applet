@@ -1,3 +1,1 @@
-function app_init(){
-    app.init({})
-}
+app.init({})

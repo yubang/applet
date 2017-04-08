@@ -16,7 +16,7 @@ build_dir_path为输出目录地址
 
 ##### 项目信息配置
 
-每个项目的根目录必须有一个index.json文件，每一个页面的js必须提供一个app_init方法作为初始化函数
+每个项目的根目录必须有一个index.json文件，每一个页面的js必须运行app.init方法
 
 * pages是一个字典数组，每一个字典描述一个页面，url是浏览器上面对应的url，path对应的是页面代码文件夹
 * title是页面默认的标题

@@ -1,22 +1,29 @@
 // 这里填充每一个页面的数据（一个字典）
-var html_and_css_and_js_data = {"/404": {"title": "\u5c0f\u7a0b\u5e8f\u9996\u9875", "html": "\u4f3c\u4e4e\u4f60\u8bbf\u95ee\u4e86\u4e00\u4e2a\u9519\u8bef\u9875\u9762\uff01", "css": "", "js": ""}, "/abc": {"title": "\u5c0f\u7a0b\u5e8f\u9996\u9875", "html": "<app-test v-bind:t=\"t\"></app-test>", "css": "", "js": "function app_init(){\n    app.init({\n        \"data\": {t: \"\u6d4b\u8bd5\u6765\u7684\"},\n        \"api\": {\n            \"url\": \"/api\",\n            success: function(d){return {t: d['data']}},\n            method: \"GET\"\n        }\n    });\n    console.log(\"welcome\");\n}"}, "/debug": {"title": "\u5c0f\u7a0b\u5e8f\u9996\u9875", "html": "", "css": "", "js": "function app_init(){\n    app.init({})\n}"}};
+var html_and_css_and_js_data = {"/404": {"title": "\u5c0f\u7a0b\u5e8f\u9996\u9875", "html": "\u4f3c\u4e4e\u4f60\u8bbf\u95ee\u4e86\u4e00\u4e2a\u9519\u8bef\u9875\u9762\uff01", "css": "", "js": "app.init({});"}, "/abc": {"title": "\u5c0f\u7a0b\u5e8f\u9996\u9875", "html": "<app-test v-bind:t=\"t\"></app-test>", "css": "", "js": "app.init({\n        \"data\": {t: \"\u6d4b\u8bd5\u6765\u7684\"},\n        \"api\": {\n            \"url\": \"/api\",\n            success: function(d){return {t: d['data']}},\n            method: \"GET\"\n        }\n    });\n    console.log(\"welcome\");"}, "/debug": {"title": "\u5c0f\u7a0b\u5e8f\u9996\u9875", "html": "", "css": "", "js": "app.init({})"}};
 
 // 404页面地址
 var not_found_path = "/404";
+
+// js name
+var js_label_name = "js_";
+var js_label_index = 0;
 
 // 路由处理
 function goto_url(url){
     if(html_and_css_and_js_data[url]){
         $("#css").html(html_and_css_and_js_data[url]['css']);
         $("#html").html(html_and_css_and_js_data[url]['html']);
-        $("#js").html(html_and_css_and_js_data[url]['js']);
-        app_init();
+
+        $("#" + js_label_name + js_label_index).remove();
+        js_label_index++;
+        $("body").append('<script id="'+js_label_name + js_label_index+'">'+html_and_css_and_js_data[url]['js']+'</script>');
     }else{
         if(html_and_css_and_js_data[not_found_path]){
             $("#css").html(html_and_css_and_js_data[not_found_path]['css']);
             $("#html").html(html_and_css_and_js_data[not_found_path]['html']);
-            $("#js").html(html_and_css_and_js_data[not_found_path]['js']);
-            app_init();
+            $("#" + js_label_name + js_label_index).remove();
+            js_label_index++;
+            $("body").append('<script id="'+js_label_name + js_label_index+'">'+html_and_css_and_js_data[not_found_path]['js']+'</script>');
         }else{
             alert("你访问的页面已经被吃掉了！");
         }
