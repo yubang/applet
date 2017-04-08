@@ -10,13 +10,11 @@ function goto_url(url){
         $("#css").html(html_and_css_and_js_data[url]['css']);
         $("#html").html(html_and_css_and_js_data[url]['html']);
         $("#js").html(html_and_css_and_js_data[url]['js']);
-        $("#loading").hide();
     }else{
         if(html_and_css_and_js_data[not_found_path]){
             $("#css").html(html_and_css_and_js_data[not_found_path]['css']);
             $("#html").html(html_and_css_and_js_data[not_found_path]['html']);
             $("#js").html(html_and_css_and_js_data[not_found_path]['js']);
-            $("#loading").hide();
         }else{
             alert("你访问的页面已经被吃掉了！");
         }
@@ -25,6 +23,74 @@ function goto_url(url){
 
 // 组件js
 %(component_js)s
+
+// app内置的方法
+function Applet(){
+
+    this.vm = null;
+
+    // 是否显示loading
+    this.show_loading = function(sign){
+        if(sign){
+            $("#html").hide();
+            $("#loading").show();
+        }else{
+            $("#html").show();
+            $("#loading").hide();
+        }
+    }
+
+    this.render = function(d){
+        var that = this;
+        this.vm = new Vue({
+            el: '#html',
+            data: d['data'] || {},
+            methods: d['methods'] || {},
+            mounted: function(){
+                that.show_loading(false);
+            }
+        });
+    }
+
+    // 渲染页面
+    this.init = function(vue_data){
+        // 显示loadin动画
+        this.show_loading(true);
+
+        var api = vue_data['api'] || {};
+        // 获取api数据
+        var api_url = api['url'] || null;
+        var api_data = api['data'] || {};
+        var api_method = api['method'] || "GET";
+        var api_headers = api['headers'] || {};
+        var success = api['success'] || function(d){return d;}
+        var error = api['error'] || function(){}
+
+        if(api_url == null){
+            this.render(vue_data);
+        }else{
+            var that = this;
+            $.ajax({
+                url: api_url,
+                type: api_method,
+                headers: api_headers,
+                data: api_data,
+                success: function(d){
+                    vue_data['data'] = success(d);
+                    that.render(vue_data);
+                },
+                error: function(){
+                    error();
+                    that.render(vue_data);
+                }
+            });
+            data['data'] = success(data);
+        }
+
+    }
+}
+
+var app = new Applet();
 
 $(document).ready(function(){
     goto_url(window.location.pathname);

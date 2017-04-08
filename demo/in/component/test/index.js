@@ -1,9 +1,9 @@
 this.data = function(){
-    return {};
+    return {"t": "ceshi"};
 }
 
 this.props = function(){
-    return [];
+    return ["t"];
 }
 
 this.methods = function(){
