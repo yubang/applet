@@ -10,11 +10,13 @@ function goto_url(url){
         $("#css").html(html_and_css_and_js_data[url]['css']);
         $("#html").html(html_and_css_and_js_data[url]['html']);
         $("#js").html(html_and_css_and_js_data[url]['js']);
+        app_init();
     }else{
         if(html_and_css_and_js_data[not_found_path]){
             $("#css").html(html_and_css_and_js_data[not_found_path]['css']);
             $("#html").html(html_and_css_and_js_data[not_found_path]['html']);
             $("#js").html(html_and_css_and_js_data[not_found_path]['js']);
+            app_init();
         }else{
             alert("你访问的页面已经被吃掉了！");
         }
@@ -84,10 +86,17 @@ function Applet(){
                     that.render(vue_data);
                 }
             });
-            data['data'] = success(data);
+
         }
 
     }
+
+    // 无刷新跳转页面
+    this.goto = function(url){
+        window.history.pushState({},0,url);
+         goto_url(url);
+    }
+
 }
 
 var app = new Applet();
