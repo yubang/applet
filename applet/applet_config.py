@@ -11,6 +11,7 @@
 from json import loads, dumps
 from .applet_component import AppletComponent
 from .base import BaseObject
+from .html_handler import HtmlHandler
 import os
 
 
@@ -49,7 +50,8 @@ class AppletConfig(BaseObject):
         :return:
         """
         for obj in self.project_config.get('pages', []):
-            html = self.read_from_file(os.path.join(self.applet_dir_path, obj['path'], "index.html"), "")
+            html_handler = HtmlHandler(os.path.join(self.applet_dir_path, obj['path'], "index.html"))
+            html = html_handler.html
             css = self.read_from_file(os.path.join(self.applet_dir_path, obj['path'], "index.css"), "")
             js = self.read_from_file(os.path.join(self.applet_dir_path, obj['path'], "index.js"), "")
             self.read_html_and_css_and_js_dict[obj['url']] = {"html": html, "css": css, "js": js, "title": obj.get('title', self.title)}
