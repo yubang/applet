@@ -52,6 +52,22 @@ app.vm
 
 app.goto(url)
 
+##### 模板语法
+
+
+// 页面引用
+
+```
+<include src="" />
+```
+
+// 模板继承
+
+```
+<block name="demo"><app-test v-bind:t="t"></app-test>123</block>
+<extends src="1.html" />
+```
+
 ##### 更多
 
 * 可以参考项目的demo目录
