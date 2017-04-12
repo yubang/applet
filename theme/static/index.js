@@ -74,6 +74,7 @@ function Applet(){
         var api_headers = api['headers'] || {};
         var success = api['success'] || function(d){return d;}
         var error = api['error'] || function(){}
+        var before_success = api['before_success'] || function(d){return true;};
 
         if(api_url == null){
             this.render(vue_data);
@@ -85,8 +86,10 @@ function Applet(){
                 headers: api_headers,
                 data: api_data,
                 success: function(d){
-                    vue_data['data'] = success(d);
-                    that.render(vue_data);
+                    if(before_success(d)){
+                        vue_data['data'] = success(d);
+                        that.render(vue_data);
+                    }
                 },
                 error: function(){
                     error();

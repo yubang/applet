@@ -70,7 +70,7 @@ class AppletConfig(BaseObject):
         :return:
         """
         with open('./theme/static/index.css') as fp:
-            self.css_content = fp.read().decode("UTF-8") + "\n" +self.component_css
+            self.css_content = fp.read().decode("UTF-8") + "\n" +self.component_css + "\n" + self.read_from_file(os.path.join(self.applet_dir_path, "global.css"), "")
 
     def build_component(self):
         """
