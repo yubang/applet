@@ -128,6 +128,10 @@ window.addEventListener('popstate', function(event) {
 });
 
 
+// 全局js
+%(global_js)s
+
+
 $(document).ready(function(){
     goto_url(window.location.pathname);
 });

@@ -62,7 +62,13 @@ class AppletConfig(BaseObject):
         :return:
         """
         with open('./theme/static/index.js') as fp:
-            self.js_content = fp.read().decode("UTF-8") % {"title": self.title, "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict), "component_js": self.component_js, "not_found_path": self.project_config['404']}
+            self.js_content = fp.read().decode("UTF-8") % {
+                "title": self.title,
+                "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict),
+                "component_js": self.component_js,
+                "not_found_path": self.project_config['404'],
+                "global_js": self.read_from_file(os.path.join(self.applet_dir_path, "global.js"), "")
+            }
 
     def build_css(self):
         """
