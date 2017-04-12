@@ -37,6 +37,7 @@ function goto_url(url){
 function Applet(){
 
     this.vm = null;
+    this.data = null;
 
     // 是否显示loading
     this.show_loading = function(sign){
@@ -104,7 +105,17 @@ function Applet(){
     // 无刷新跳转页面
     this.goto = function(url){
         window.history.pushState({},0,url);
-         goto_url(url);
+         goto_url(window.location.pathname);
+    }
+
+    // 获取get参数
+    this.get_args = function(name){
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) {
+        return unescape(r[2]);
+      }
+      return false;
     }
 
 }
