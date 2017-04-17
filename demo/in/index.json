@@ -10,9 +10,9 @@
   ],
   "404": "/404",
   "own_css_list": [
-    "https://cdn.bootcss.com/iview/2.0.0-rc.9/styles/iview.css"
+    "https://unpkg.com/element-ui/lib/theme-default/index.css"
   ],
   "own_js_list": [
-    "https://cdn.bootcss.com/iview/2.0.0-rc.9/iview.min.js"
+    "https://unpkg.com/element-ui/lib/index.js"
   ]
 }

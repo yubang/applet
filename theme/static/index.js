@@ -104,8 +104,8 @@ function Applet(){
 
     // 无刷新跳转页面
     this.goto = function(url){
-        window.history.pushState({},document.title,url);
-         goto_url(window.location.pathname);
+        window.history.pushState({}, null,url);
+        goto_url(window.location.pathname);
     }
 
     // 获取get参数
