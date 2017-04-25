@@ -10,6 +10,8 @@
 
 from .applet_config import AppletConfig
 import os
+import hashlib
+import time
 
 
 class Applet:
@@ -30,6 +32,7 @@ class Applet:
                     "title": self.applet_config.title,
                     "css_list": '\n'.join(['<link rel="stylesheet" href="%s" />' % obj for obj in self.applet_config.project_config['own_css_list']]),
                     "js_list": '\n'.join(['<script src="%s"></script>' % obj for obj in self.applet_config.project_config['own_js_list']]),
+                    "version": hashlib.md5(str(time.time())).hexdigest(),
                 }
                 fp.write(text.encode("UTF-8"))
         # 生成js

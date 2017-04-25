@@ -67,7 +67,7 @@ class AppletConfig(BaseObject):
                 "html_and_css_and_js_json": dumps(self.read_html_and_css_and_js_dict),
                 "component_js": self.component_js,
                 "not_found_path": self.project_config['404'],
-                "global_js": self.read_from_file(os.path.join(self.applet_dir_path, "global.js"), "")
+                "global_js": self.read_from_file(os.path.join(self.applet_dir_path, "global.js"), "").decode("UTF-8")
             }
 
     def build_css(self):

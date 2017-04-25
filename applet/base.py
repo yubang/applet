@@ -14,5 +14,5 @@ class BaseObject(object):
     def read_from_file(file_path, default=None):
         if not os.path.exists(file_path):
             return default
-        with open(file_path) as fp:
+        with open(file_path, "r") as fp:
             return fp.read()
