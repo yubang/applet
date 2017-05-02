@@ -118,6 +118,10 @@ function Applet(){
       return false;
     }
 
+    this.reload = function(){
+        this.goto(window.location.href);
+    }
+
 }
 
 var app = new Applet();
